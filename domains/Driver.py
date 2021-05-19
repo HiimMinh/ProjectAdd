@@ -1,3 +1,5 @@
+from domains.Bed import Bed
+from domains.Room import Room
 from tkinter import *
 from tkinter import ttk
 import Input
@@ -20,7 +22,11 @@ class Driver:
     # List to store information of rooms
     rooms = []
     # List to store information of beds
-    beds = []
+    
+    beds = [Bed(self, 1, 'free', Room(Driver, 'Helo', 18, 'Free') )]
+    beds2 = [Bed]
+
+
 
     nofpatients = None
     nofpharmacies = None

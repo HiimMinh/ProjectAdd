@@ -71,7 +71,8 @@ class Input:
             roomid = roomid_pat_var.get()
             bedid = bedid_pat_var.get()
 
-            self.driver.patients.append(Patient(driver, name, age, ill, bedid, roomid, roomname))
+ 
+            self.driver.patients.append(Patient(driver, name, age, ill, Bed(driver, bedid, bstatus, Room(driver, roomname, roomid))))
 
             # Clean entry
             name_pat_entry.delete(0, END)

@@ -1,13 +1,10 @@
 
 class Patient:
-    def __init__(self, driver, patname, patage, patill, bedid, roomid, roomname):
+    def __init__(self, driver, patname, patage, patill, bed):
         self.patname = patname
         self.patage = patage
         self.patill = patill
-        self.bedid = bedid
-        self.roomid = roomid
-        self.roomname = roomname
-
+        self.bed = bed
     # Get methods
     def get_patname(self):
         return self.patname
@@ -15,12 +12,8 @@ class Patient:
         return self.patage
     def get_patill(self):
         return self.patill
-    def get_roomid(self):
-        return self.roomid
-    def get_bedid(self):
-        return self.bedid
-    def get_roomname(self):
-        return self.roomname
+    def get_bed(self):
+        return self.bed
 
     # Set methods
     def set_patname(self, patname):
@@ -29,13 +22,8 @@ class Patient:
         self.patage = patage
     def set_patill(self, patill):
         self.patill = patill
-    def set_roomid(self,roomid):
-        self.roomid = roomid
-    def set_bedid(self, bedid):
-        self.bedid = bedid
-    def set_roomname(self, roomname):
-        self.roomname = roomname
-
+    def set_bed(self, bed):
+        self.bed = bed
     
 
 
