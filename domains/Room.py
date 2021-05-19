@@ -2,7 +2,7 @@
 
 class Room:
     def __init__(self, driver, rname, rid, bquantity):
-        self.rname = rname
+        self.status
         self.rid = rid
         self.bquantity = bquantity
 

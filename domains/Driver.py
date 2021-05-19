@@ -12,7 +12,7 @@ class Driver:
     # List to store information of patients
     patients = []
     # List to store information of pharmacies
-    pharmacies = []
+    medicines = []
     # List to store information of doctors
     doctors = []
     # List to store information of staffs
@@ -62,30 +62,21 @@ class Driver:
         def input_window(self):
             # Create input window
             input_win = Toplevel(root)
-            
+            input_win.title("Input Window")
+            label11 = Label(input_win, text = "Inpur data here")
+            label22 = Label(input_win, text= "Treeview here                     ")
             # #~~~~~~~~~~~~~~~~~~~~~~~~~ Input patients~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-            btn_input_patients = Button(input_win, text = 'Patients', command=self.input.input_patients_window(input_win))
-            #     # Create input patients window
-            #     input_pat_win = Toplevel(input_win)
-            #     # Input variable
-            #     name_var = StringVar()
-            #     age_var = IntVar()
-            #     status_var = StringVar()
-            #     ill_var = StringVar()
+            btn_input_patients = Button(input_win, padx= 135, pady= 20, text = 'Patients', command= lambda: self.input.input_patients_window(input_win))
+            btn_input_employees = Button(input_win, padx= 126, pady= 20, text = 'Employees', command= lambda: self.input.input_employees_window(input_win))
+            btn_input_infrastructure = Button(input_win, padx= 118, pady= 20, text= 'Infrastructure', command= lambda: self.input.input_infrastructure_window(input_win))
+            
+            # Set position
+            btn_input_patients.grid(column=0, row=1)
+            btn_input_employees.grid(column=0, row=2)
+            btn_input_infrastructure.grid(column=0, row=3)
 
-            #     # Create buttons
-            #     def submit():
-            #     name = name_var.get()
-            #     age = age_var.get()
-            #     status = status_var.get()
-            #     ill = ill_var.get()
-            #     sub_btn = Button(input_pat_win, text = 'Submit', command= submit)
-
-            #     #~~~~~~~~~~~~~~~~~~~~~~~~~~
-            #     input_pat_win.mainloop()
-            # #~~~~~~~~~~~~~~~~~~~~~~~~~~~
-            btn_input_patients.grid()
-
+            label11.grid(column=0, row=0, padx=10, pady= 10)
+            label22.grid(column= 1, row= 1, columnspan= 3)
             input_win.mainloop()
         #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -109,3 +100,6 @@ class Driver:
         label1.grid(column=0, row=0, padx=10, pady= 10)
         label2.grid(column= 1, row= 1, columnspan= 3)
         root.mainloop()
+
+        for item in self.patients:
+            print(item.get_patname())
