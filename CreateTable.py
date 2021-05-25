@@ -15,7 +15,6 @@ c = conn.cursor()
 c.execute("""CREATE TABLE patients (
     p_name text,
     p_dob text,
-    p_age integer,
     p_sex text,
     p_address text,
     p_ill text
@@ -28,7 +27,6 @@ c.execute("""CREATE TABLE patients (
 c.execute("""CREATE TABLE doctors (
     doc_name text,
     doc_dob text,
-    doc_age integer,
     doc_sex text,
     doc_major text,
     doc_salary integer
@@ -41,7 +39,6 @@ c.execute("""CREATE TABLE doctors (
 c.execute("""CREATE TABLE nurses (
     nur_name text,
     nur_dob text,
-    nur_age integer,
     nur_sex text,
     nur_salary integer,
     doc_id
