@@ -7,7 +7,6 @@ class Win_Employees:
         self.driver = driver
 
 
-    
     # Function to manage employees
     def open_employees(self, root):
         #======================================================================================================
