@@ -79,18 +79,18 @@ class Win_Patients:
         my_tree.tag_configure("evenrow", background= "lightblue")
 
         # # Query the database
-        c.execute("SELECT *, oid FROM patients")
-        records = c.fetchall()
+        # c.execute("SELECT *, oid FROM patients")
+        # records = c.fetchall()
 
-        # Insert data to treeview
-        global count
-        count = 0
-        for record in records:
-            if count % 2 == 0:
-                my_tree.insert(parent='', index='end', iid= count, text='', values=(record[5], record[0], record[1], record[2], record[3], record[4]), tags= ("evenrow",))              
-            else:
-                my_tree.insert(parent='', index='end', iid= count, text='', values=(record[5], record[0], record[1], record[2], record[3], record[4]), tags= ("oddrow",))   
-            count += 1
+        # # Insert data to treeview
+        # global count
+        # count = 0
+        # for record in records:
+        #     if count % 2 == 0:
+        #         my_tree.insert(parent='', index='end', iid= count, text='', values=(record[5], record[0], record[1], record[2], record[3], record[4]), tags= ("evenrow",))              
+        #     else:
+        #         my_tree.insert(parent='', index='end', iid= count, text='', values=(record[5], record[0], record[1], record[2], record[3], record[4]), tags= ("oddrow",))   
+        #     count += 1
 
         my_tree.pack(pady = 20)
 
@@ -143,9 +143,69 @@ class Win_Patients:
         ill_box.grid(row=1, column=4)
 
 
+        # Select Record
+        def select_record(e):
+            # Clear boxes
+            name_box.delete(0, END)
+            dob_box.delete(0, END)
+            sex_box.delete(0, END)
+            adr_box.delete(0, END)
+            ill_box.delete(0, END)
+
+            # Grab record Number
+            selected = my_tree.focus()
+
+            # Grab record values
+            values = my_tree.item(selected, 'values')
+
+            # Output to entry boxes
+            name_box.insert(0, values[1])
+            dob_box.insert(0, values[2])
+            sex_box.insert(0, values[3])
+            adr_box.insert(0, values[4])
+            ill_box.insert(0, values[5])
 
 
-        # Add record
+        # Update Record 
+        def update_record():
+            #Grab the record Number
+            selected = my_tree.focus()
+
+            # Update record
+            my_tree.item(selected, text='', values=(name_box.get(), dob_box.get(), sex_box.get(), adr_box.get(), ill_box.get()))
+
+            # Create a database or connect to one
+            conn = sqlite3.connect("hospital.db")
+
+            # Create cursor
+            c = conn.cursor()
+
+            c.execute("""UPDATE patients SET
+                    p_name = :p_name,
+                    p_dob = :p_dob,
+                    p_sex = :p_sex,
+                    p_adr = :p_adr,
+                    p_ill = :p_ill
+
+                    WHERE iod = :oid""",
+                    {
+                        'p_name': name_box.get(),
+                        'p_dob' : dob_box.get(),
+                        'p_sex' : sex_box.get(),
+                        'p_adr' : adr_box.get(),
+                        'p_ill' : ill_box.get(),
+
+                    }
+                    )
+
+            # Commit Changes
+            conn.commit()
+
+            # Close Connection
+            conn.close()
+
+
+        # Add Record to Database
         def add_record():
             # Create a database or connect to one
             conn = sqlite3.connect("hospital.db")
@@ -153,7 +213,7 @@ class Win_Patients:
             # Create cursor
             c = conn.cursor()
 
-            # Insert Into Table
+            # Add New Record
             c.execute("INSERT INTO patients Values (:p_name, :p_dob, :p_sex, :p_address, :p_ill)",
             {
                 'p_name' : name_box.get(),
@@ -172,6 +232,12 @@ class Win_Patients:
 
 
             # count += 1
+            
+            # Commit Changes
+            conn.commit()
+
+            # Close Connection
+            conn.close()
 
             # Clear boxes
             name_box.delete(0, END)
@@ -180,14 +246,16 @@ class Win_Patients:
             adr_box.delete(0, END)
             ill_box.delete(0, END)
 
-            # Commit Changes
-            conn.commit()
+            # Clear The Treeview Table
+            my_tree.delete(*my_tree.get_children())
 
-            # Close Connection
-            conn.close()
+            # Run to pull data from database on start
+            query_database()
 
-        # Show records
-        def query():
+
+            
+        # Show records upon running program
+        def query_database():
             # Create a database or connect to one
             conn = sqlite3.connect("hospital.db")
 
@@ -200,6 +268,7 @@ class Win_Patients:
             
             # Loop Thru Results
             global count
+            count = 0
             for record in records:
                 if count % 2 == 0:
                     my_tree.insert(parent='', index='end', iid= count , text='', values=(record[5], record[0], record[1], record[2], record[3], record[4]) , tags= ("evenrow",))              
@@ -240,25 +309,32 @@ class Win_Patients:
 
 
         # Buttons
+        # Add Record
         add_recordx = Button(btn_frame, text="Add Record", command= add_record)
         add_recordx.grid(row= 0 , column= 0, padx= 20)
 
-        # Show records
-        show_record = Button(btn_frame, text = "Show Record", command= query)
-        show_record.grid(row = 0, column= 1, padx= 20)
-        # Remove all
+        # Show Records
+        update_record = Button(btn_frame, text = "Update Record", command= update_record)
+        update_record.grid(row = 0, column= 1, padx= 20)
+
+        # Remove All
         remove_allx = Button(btn_frame, text = "Remove All Record", command = remove_all)
         remove_allx.grid(row = 0, column= 2, padx= 20)
 
-        # Remove one
+        # Remove One
         remove_onex = Button(btn_frame, text= "Remove One Selected", command=remove_one)
         remove_onex.grid(row= 0, column= 3, padx= 20)
 
-        # Remove many selected
+        # Remove Many Selected
         remove_manyx = Button(btn_frame, text = "Remove Many Selected", command= remove_many)
         remove_manyx.grid(row = 0, column= 4, padx= 20)
 
+        
+        # Bind the treeview
+        my_tree.bind("<ButtonRelease-1>", select_record)
 
+        # Pull data before running program
+        query_database()
 
         # Commit Changes
         conn.commit()
