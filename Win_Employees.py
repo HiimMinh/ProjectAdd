@@ -9,6 +9,13 @@ class Win_Employees:
 
     # Function to manage employees
     def open_employees(self, root):
+        # Create patien window
+        win = Toplevel(root)
+        win.title("Employee")
+        # Rezise patient window
+        win.geometry("1600x900")
+
+
         #======================================================================================================
         #============================================= Doctors ================================================
         #======================================================================================================
@@ -19,11 +26,6 @@ class Win_Employees:
         # Create cursor
         c = conn.cursor()
         
-        # Create patien window
-        win = Toplevel(root)
-        win.title("Employee")
-        # Rezise patient window
-        win.geometry("1600x900")
 
         # # Create scroll bar for the screen
         # scroll_frame = Frame(win)
@@ -32,10 +34,6 @@ class Win_Employees:
         # my_scrollbar = Scrollbar(scroll_frame, orient= VERTICAL)
         # my_scrollbar.pack(side=RIGHT, fill= Y)
        
-
-        # label_doctor = Label(win, text = "Doctor" ,font=('calibre',20, 'bold') )
-        # label_doctor.pack(pady= 5)
-
         # Create Treeview Frame
         tree1_frame = Frame(win)
         tree1_frame.pack()
@@ -65,7 +63,7 @@ class Win_Employees:
         my_tree1.column("Sex", anchor = W, width = 100)
         my_tree1.column("Major", anchor = W, width = 200)
         my_tree1.column("Salary", anchor = W, width = 200)
-
+        
 
         # Create Headings
         my_tree1.heading("#0", text = "", anchor = CENTER)
@@ -75,7 +73,7 @@ class Win_Employees:
         my_tree1.heading("Sex", text = "Sex", anchor=CENTER)
         my_tree1.heading("Major", text = "Major", anchor=CENTER)
         my_tree1.heading("Salary", text = "Salary", anchor=CENTER)
-
+        
 
         #?????????????????????????
         # Data from database
@@ -102,53 +100,50 @@ class Win_Employees:
         add_frame.pack(fill="x", expand="yes", padx= 20)
 
         id1 = Label(add_frame, text="ID")
-        id1.grid(row=0, column=5, padx= 10, pady= 10)
+        id1.grid(row=0, column=5, padx= 10, pady= 5)
 
         n1 = Label(add_frame, text="Name")
-        n1.grid(row=0, column=0, padx= 10, pady= 10)
+        n1.grid(row=0, column=0, padx= 10, pady= 5)
 
         dob = Label(add_frame, text="DoB")
-        dob.grid(row=0, column = 1, padx= 10, pady= 10)
+        dob.grid(row=0, column = 1, padx= 10, pady= 5)
 
         sex = Label(add_frame, text = "Sex")
-        sex.grid(row=0, column = 2, padx= 10, pady= 10)
+        sex.grid(row=0, column = 2, padx= 10, pady= 5)
         
         maj = Label(add_frame, text = "Major")
-        maj.grid(row=0, column = 3, padx= 10, pady= 10)
+        maj.grid(row=0, column = 3, padx= 10, pady= 5)
 
         sal = Label(add_frame, text = "Salary")
-        sal.grid(row=0, column = 4, padx= 10, pady= 10)
+        sal.grid(row=0, column = 4, padx= 10, pady= 5)
 
-
+        
         #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         #~~~~~~~~~~~~~~~~~~~ Entry ~~~~~~~~~~~~~~~~~~~~~~~~~
         #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         # ID
         id1_box = Entry(add_frame)
-        id1_box.grid(row=1, column=5, padx= 10, pady= 10)
+        id1_box.grid(row=1, column=5, padx= 10, pady= 5)
 
         # Name
         name_box = Entry(add_frame)
-        name_box.grid(row=1, column=0, padx= 10, pady= 10)
+        name_box.grid(row=1, column=0, padx= 10, pady= 5)
 
-       
         dob_box = Entry(add_frame)
-        dob_box.grid(row=1, column=1, padx= 10, pady= 10)
+        dob_box.grid(row=1, column=1, padx= 10, pady= 5)
 
-       
         sex_box = Combobox(add_frame)
         sex_box['values'] = ("Male", "Female")
         sex_box.current(0)
-        sex_box.grid(row=1, column=2, padx= 10, pady= 10)
+        sex_box.grid(row=1, column=2, padx= 10, pady= 5)
 
-    
-       
         maj_box = Entry(add_frame)
-        maj_box.grid(row=1, column=3, padx= 10, pady= 10)
+        maj_box.grid(row=1, column=3, padx= 10, pady= 5)
 
-       
         sal_box = Entry(add_frame)
-        sal_box.grid(row=1, column=4, padx= 10, pady= 10)
+        sal_box.grid(row=1, column=4, padx= 10, pady= 5)
+
+        
 
         # Select Record
         def select_record(e):
@@ -159,6 +154,7 @@ class Win_Employees:
             maj_box.delete(0, END)
             sal_box.delete(0, END)
             id1_box.delete(0, END)
+            
 
             # Grab record Number
             selected = my_tree1.focus()
@@ -167,12 +163,13 @@ class Win_Employees:
             values = my_tree1.item(selected, 'values')
 
             # Output to entry boxes
+            id1_box.insert(0, values[0])
             name_box.insert(0, values[1])
             dob_box.insert(0, values[2])
             sex_box.insert(0, values[3])
             maj_box.insert(0, values[4])
             sal_box.insert(0, values[5])
-            id1_box.insert(0, values[0])
+            
 
         # Update Record 
         def update_record():
@@ -259,7 +256,7 @@ class Win_Employees:
             # Run to pull data from database on start
             query_database()
 
-            # Show records upon running program
+        # Show records upon running program
         def query_database():
             # Create a database or connect to one
             conn = sqlite3.connect("hospital.db")
@@ -370,7 +367,7 @@ class Win_Employees:
         tree2_scroll.config(command=my_tree2.yview)
 
         # Define our columns
-        my_tree2['columns'] = ("ID", "Name", "DoB", "Sex", "Salary")
+        my_tree2['columns'] = ("ID", "Name", "DoB", "Sex", "Salary", "Support doctor ID")
 
         # Formate our columns
         my_tree2.column("#0", width = 0, stretch = NO)
@@ -379,7 +376,7 @@ class Win_Employees:
         my_tree2.column("DoB", anchor = W, width = 200)
         my_tree2.column("Sex", anchor = W, width = 100)
         my_tree2.column("Salary", anchor = W, width = 200)
-
+        my_tree2.column("Support doctor ID", anchor = W, width = 50)
 
         # Create Headings
         my_tree2.heading("#0", text = "", anchor = CENTER)
@@ -388,10 +385,12 @@ class Win_Employees:
         my_tree2.heading("DoB", text = "DoB", anchor=CENTER)
         my_tree2.heading("Sex", text = "Sex", anchor=CENTER)
         my_tree2.heading("Salary", text = "Salary", anchor=CENTER)
-
+        my_tree2.heading("Support doctor ID", text = "Support doctor ID", anchor=CENTER)
 
         #?????????????????????????
-        # Data from database
+        
+        
+        
         #?????????????????????????
 
         # Create striped row tags
@@ -404,20 +403,22 @@ class Win_Employees:
         add_frame2.pack(fill="x", expand="yes", padx= 20)
 
         id2 = Label(add_frame2, text="ID")
-        id2.grid(row=0, column=4, padx= 10, pady= 10)
+        id2.grid(row=0, column=4, padx= 10, pady= 5)
 
         name2 = Label(add_frame2, text="Name")
-        name2.grid(row=0, column=0, padx= 10, pady= 10)
+        name2.grid(row=0, column=0, padx= 10, pady= 5)
 
         dob2 = Label(add_frame2, text="DoB")
-        dob2.grid(row=0, column = 1, padx= 10, pady= 10)
+        dob2.grid(row=0, column = 1, padx= 10, pady= 5)
 
         sex2 = Label(add_frame2, text = "Sex")
-        sex2.grid(row=0, column = 2, padx= 10, pady= 10)
+        sex2.grid(row=0, column = 2, padx= 10, pady= 5)
 
         sal2 = Label(add_frame2, text = "Salary")
-        sal2.grid(row=0, column = 3, padx= 10, pady= 10)
+        sal2.grid(row=0, column = 3, padx= 10, pady= 5)
 
+        doctorsp_id_label = Label(add_frame2, text = "Support doctor ID")
+        doctorsp_id_label.grid(row=0, column = 5, padx= 10, pady= 5)
 
         #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         #~~~~~~~~~~~~~~~~~~~ Entry ~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -442,6 +443,9 @@ class Win_Employees:
        
         sal_box2 = Entry(add_frame2)
         sal_box2.grid(row=1, column=3, padx= 10, pady= 10)
+        
+        doctorsp_id_box = Entry(add_frame2)
+        doctorsp_id_box.grid(row=1, column=5, padx= 10, pady= 5)
 
         # Select Record
         def select_record2(e):
@@ -451,7 +455,8 @@ class Win_Employees:
             sex_box2.delete(0, END)
             sal_box2.delete(0, END)
             id_box2.delete(0, END)
-
+            doctorsp_id_box.delete(0 , END)
+        
             # Grab record Number
             selected = my_tree2.focus()
 
@@ -459,11 +464,12 @@ class Win_Employees:
             values = my_tree2.item(selected, 'values')
 
             # Output to entry boxes
+            id_box2.insert(0, values[0])
             name_box2.insert(0, values[1])
             dob_box2.insert(0, values[2])
             sex_box2.insert(0, values[3])
             sal_box2.insert(0, values[4])
-            id_box2.insert(0, values[0])
+            doctorsp_id_box.insert(0, values[5])
 
         # Update Record 
         def update_record2():
@@ -472,7 +478,7 @@ class Win_Employees:
             selected = my_tree2.focus()
 
             # Update record
-            my_tree2.item(selected, text='', values=(id_box2.get(),name_box2.get(), dob_box2.get(), sex_box2.get(), sal_box2.get()))
+            my_tree2.item(selected, text='', values=(id_box2.get(),name_box2.get(), dob_box2.get(), sex_box2.get(), sal_box2.get(), doctorsp_id_box.get()))
 
             # Create a database or connect to one
             conn = sqlite3.connect("hospital.db")
@@ -486,6 +492,7 @@ class Win_Employees:
                     nur_dob = :nur_dob,
                     nur_sex = :nur_sex,
                     nur_salary = :nur_salary
+                    doc_id = :doc_id
 
                     WHERE nur_id = :nur_id""",
                     {   
@@ -493,8 +500,8 @@ class Win_Employees:
                         'p_name': name_box2.get(),
                         'p_dob' : dob_box2.get(),
                         'p_sex' : sex_box2.get(),
-                        'p_salary' : sal_box2.get()
-                        
+                        'p_salary' : sal_box2.get(),
+                        'doc_id' : doctorsp_id_box.get()
                     }
                     )
 
@@ -516,12 +523,13 @@ class Win_Employees:
             c = conn.cursor()
 
             # Add New Record
-            c.execute("INSERT INTO nurses (nur_name, nur_dob, nur_sex, nur_salary) Values (:nur_name, :nur_dob, :nur_sex, :nur_salary)",
+            c.execute("INSERT INTO nurses (nur_name, nur_dob, nur_sex, nur_salary, patient_id) Values (:nur_name, :nur_dob, :nur_sex, :nur_salary, :doc_id)",
             {   
                 'nur_name' : name_box2.get(),
                 'nur_dob' : dob_box2.get(),
                 'nur_sex' : sex_box2.get(),
                 'nur_salary' : sal_box2.get(),
+                'doc_id' : doctorsp_id_box.get()
             }
             )
 
@@ -536,6 +544,7 @@ class Win_Employees:
             dob_box2.delete(0, END)
             sex_box2.delete(0, END)
             sal_box2.delete(0, END)
+            doctorsp_id_box.delete(0, END)
 
             # Clear The Treeview Table
             my_tree2.delete(*my_tree2.get_children())
@@ -560,9 +569,9 @@ class Win_Employees:
             count = 0
             for record in records2:
                 if count % 2 == 0:
-                    my_tree2.insert(parent='', index='end', iid= count , text=f'count', values=(record[0], record[1], record[2], record[3], record[4]) , tags= ("evenrow",))              
+                    my_tree2.insert(parent='', index='end', iid= count , text=f'count', values=(record[0], record[1], record[2], record[3], record[4], record[5]) , tags= ("evenrow",))              
                 else:
-                    my_tree2.insert(parent='', index='end', iid= count , text=f'count', values=(record[0], record[1], record[2], record[3], record[4]) , tags= ("oddrow",))
+                    my_tree2.insert(parent='', index='end', iid= count , text=f'count', values=(record[0], record[1], record[2], record[3], record[4], record[5]) , tags= ("oddrow",))            
                 count += 1
 
             # Commit Changes
@@ -603,8 +612,8 @@ class Win_Employees:
         add_recordx2.grid(row= 0 , column= 0, padx= 10, pady= 10)
 
         # Show Records
-        update_record = Button(btn_frame2, text = "Update Record", command= update_record2)
-        update_record.grid(row = 0, column= 1, padx= 10, pady= 10)
+        update_record2 = Button(btn_frame2, text = "Update Record", command= update_record2)
+        update_record2.grid(row = 0, column= 1, padx= 10, pady= 10)
 
         # Remove all
         remove_allx2 = Button(btn_frame2, text = "Remove All Record", command = remove_all2)
