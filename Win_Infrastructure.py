@@ -237,7 +237,7 @@ class Win_Infrastructure:
 
         # Update Records
         update_record = Button(btn_frame1, text = "Update Record", command= update_record1)
-        update_record.grid(row = 0, column= 1, padx= 10, pady= 10)
+        update_record.grid(row = 0, column= 1, padx= 10, pady= 5)
 
         # Remove all
         remove_all1 = Button(btn_frame1, text = "Remove All Record", command = remove_all1)
@@ -378,16 +378,16 @@ class Win_Infrastructure:
             # Still lack of foreign key!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             c.execute("""UPDATE beds SET
                     bed_id = :bed_id,
-                    r_name = :r_name,
-                    r_id = :r_id,
-                    p_id = :p_id,
+                    bed_r_name = :bed_r_name,
+                    bed_r_id = :bed_r_id,
+                    bed_p_id = :bed_p_id,
                 
                     WHERE bed_id = :bed_id""",
                     {   
                         'bed_id' : bed_id_box.get(),
-                        'r_name': room_name_box.get(),
-                        'r_id' : room_id_box.get(),
-                        'p_id' : patient_id_box.get(),
+                        'bed_r_name': room_name_box.get(),
+                        'bed_r_id' : room_id_box.get(),
+                        'bed_p_id' : patient_id_box.get(),
                         
                     }
                     )
@@ -412,12 +412,11 @@ class Win_Infrastructure:
             c = conn.cursor()
 
             # Add New Record
-            c.execute("INSERT INTO beds (r_name, r_id, p_id) Values (:r_name, :r_id, :p_id)",
+            c.execute("INSERT INTO beds (bed_r_name, bed_r_id, bed_p_id) Values (:bed_r_name, :bed_r_id, :bed_p_id)",
             {   
-                'r_name' : room_name_box.get(),
-                'r_id' : room_id_box.get(),
-                'p_id' : patient_id_box.get(),
-              
+                'bed_r_name' : room_name_box.get(),
+                'bed_r_id' : room_id_box.get(),
+                'bed_p_id' : patient_id_box.get(),
             }
             )
 

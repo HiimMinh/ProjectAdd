@@ -75,25 +75,9 @@ class Win_Employees:
         my_tree1.heading("Salary", text = "Salary", anchor=CENTER)
         
 
-        #?????????????????????????
-        # Data from database
-        #?????????????????????????
-
         # Create striped row tags
         my_tree1.tag_configure("oddrow", background= "white")
         my_tree1.tag_configure("evenrow", background= "lightblue")
-
-      
-
-        # # Insert data to treeview
-        # global count
-        # count = 0
-        # for record in data:
-        #     if count % 2 == 0:
-        #         my_tree1.insert(parent='', index='end', iid= count, text='', values=(record[0], record[1], record[2], record[3], record[4], record[5]), tags= ("evenrow",))              
-        #     else:
-        #         my_tree1.insert(parent='', index='end', iid= count, text='', values=(record[0], record[1], record[2], record[3], record[4], record[5]), tags= ("oddrow",))   
-        #     count += 1
 
      
         add_frame = LabelFrame(win, text = "Doctor Record")
@@ -429,20 +413,20 @@ class Win_Employees:
 
         # Name
         name_box2 = Entry(add_frame2)
-        name_box2.grid(row=1, column=0, padx= 10, pady= 10)
+        name_box2.grid(row=1, column=0, padx= 10, pady= 5)
 
        
         dob_box2 = Entry(add_frame2)
-        dob_box2.grid(row=1, column=1, padx= 10, pady= 10)
+        dob_box2.grid(row=1, column=1, padx= 10, pady= 5)
 
        
         sex_box2 = Combobox(add_frame2)
         sex_box2['values'] = ("Male", "Female")
         sex_box2.current(0)
-        sex_box2.grid(row=1, column=2, padx= 10, pady= 10)
+        sex_box2.grid(row=1, column=2, padx= 10, pady= 5)
        
         sal_box2 = Entry(add_frame2)
-        sal_box2.grid(row=1, column=3, padx= 10, pady= 10)
+        sal_box2.grid(row=1, column=3, padx= 10, pady= 5)
         
         doctorsp_id_box = Entry(add_frame2)
         doctorsp_id_box.grid(row=1, column=5, padx= 10, pady= 5)
@@ -492,7 +476,7 @@ class Win_Employees:
                     nur_dob = :nur_dob,
                     nur_sex = :nur_sex,
                     nur_salary = :nur_salary
-                    doc_id = :doc_id
+                    docsp_id = :docsp_id
 
                     WHERE nur_id = :nur_id""",
                     {   
@@ -501,7 +485,7 @@ class Win_Employees:
                         'p_dob' : dob_box2.get(),
                         'p_sex' : sex_box2.get(),
                         'p_salary' : sal_box2.get(),
-                        'doc_id' : doctorsp_id_box.get()
+                        'docsp_id' : doctorsp_id_box.get()
                     }
                     )
 
@@ -523,13 +507,13 @@ class Win_Employees:
             c = conn.cursor()
 
             # Add New Record
-            c.execute("INSERT INTO nurses (nur_name, nur_dob, nur_sex, nur_salary, patient_id) Values (:nur_name, :nur_dob, :nur_sex, :nur_salary, :doc_id)",
+            c.execute("INSERT INTO nurses (nur_name, nur_dob, nur_sex, nur_salary, docsp_id) Values (:nur_name, :nur_dob, :nur_sex, :nur_salary, :docsp_id)",
             {   
                 'nur_name' : name_box2.get(),
                 'nur_dob' : dob_box2.get(),
                 'nur_sex' : sex_box2.get(),
                 'nur_salary' : sal_box2.get(),
-                'doc_id' : doctorsp_id_box.get()
+                'docsp_id' : doctorsp_id_box.get()
             }
             )
 
@@ -609,23 +593,23 @@ class Win_Employees:
 
         # Buttons
         add_recordx2 = Button(btn_frame2, text="Add Record", command= add_record2)
-        add_recordx2.grid(row= 0 , column= 0, padx= 10, pady= 10)
+        add_recordx2.grid(row= 0 , column= 0, padx= 10, pady= 5)
 
         # Show Records
         update_record2 = Button(btn_frame2, text = "Update Record", command= update_record2)
-        update_record2.grid(row = 0, column= 1, padx= 10, pady= 10)
+        update_record2.grid(row = 0, column= 1, padx= 10, pady= 5)
 
         # Remove all
         remove_allx2 = Button(btn_frame2, text = "Remove All Record", command = remove_all2)
-        remove_allx2.grid(row = 0, column= 2, padx= 10, pady= 10)
+        remove_allx2.grid(row = 0, column= 2, padx= 10, pady= 5)
 
         # Remove one
         remove_onex2 = Button(btn_frame2, text= "Remove One Selected", command=remove_one2)
-        remove_onex2.grid(row= 0, column= 3, padx= 10, pady= 10)
+        remove_onex2.grid(row= 0, column= 3, padx= 10, pady= 5)
 
         # Remove many selected
         remove_manyx2 = Button(btn_frame2, text = "Remove Many Selected", command= remove_many2)
-        remove_manyx2.grid(row = 0, column= 4, padx= 10, pady= 10)
+        remove_manyx2.grid(row = 0, column= 4, padx= 10, pady= 5)
 
         # Bind the treeview
         my_tree2.bind("<ButtonRelease-1>", select_record2)

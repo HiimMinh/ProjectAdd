@@ -392,13 +392,13 @@ class Win_Bill:
             c.execute("""UPDATE bills SET
                     bill_id = :bill_id,
                     bill_values = :bill_values,
-                    p_id = :p_id
+                    bill_p_id = :bill_p_id
                 
                     WHERE bill_id = :bill_id""",
                     {   
                         'bill_id' : bill_id_box.get(),
                         'bill_values': bill_values_box.get(),
-                        'p_id' : patient_id_box.get(),
+                        'bill_p_id' : patient_id_box.get(),
                         
                     }
                     )
@@ -423,10 +423,10 @@ class Win_Bill:
             c = conn.cursor()
 
             # Add New Record
-            c.execute("INSERT INTO bills (bill_values, p_id) Values (:bill_values, :p_id)",
+            c.execute("INSERT INTO bills (bill_values, bill_p_id) Values (:bill_values, :bill_p_id)",
             {   
                 'bill_values' : bill_values_box.get(),
-                'p_id' : patient_id_box.get(),
+                'bill_p_id' : patient_id_box.get(),
               
             }
             )
