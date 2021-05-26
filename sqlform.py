@@ -13,17 +13,17 @@ conn = sqlite3.connect("address_book.db")
 # Create cursor
 c = conn.cursor()
 
-# # Create table
-# c.execute("""CREATE TABLE addresses (
-#     first_name text,
-#     last_name text,
-#     address text,
-#     city text,
-#     state text,
-#     zipcode integer
+# Create table
+c.execute("""CREATE TABLE if not exists addresses(
+    first_name text,
+    last_name text,
+    address text,
+    city text,
+    state text,
+    zipcode integer
 
-# )
-#         """)
+)
+        """)
 
 # Create Edit Function to Update Record
 def update():

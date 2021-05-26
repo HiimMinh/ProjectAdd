@@ -13,6 +13,7 @@ c = conn.cursor()
 # Create Patient table
 # p_id = oid
 c.execute("""CREATE TABLE patients (
+    p_id INTEGER PRIMARY KEY AUTOINCREMENT,            
     p_name text,
     p_dob text,
     p_sex text,
@@ -25,6 +26,7 @@ c.execute("""CREATE TABLE patients (
 # Create Doctor table
 # doc_id = oid
 c.execute("""CREATE TABLE doctors (
+    doc_id INTEGER PRIMARY KEY AUTOINCREMENT,
     doc_name text,
     doc_dob text,
     doc_sex text,
@@ -37,6 +39,7 @@ c.execute("""CREATE TABLE doctors (
 # Create Nurse table
 # nur_id = oid
 c.execute("""CREATE TABLE nurses (
+    nur_id INTEGER PRIMARY KEY AUTOINCREMENT,
     nur_name text,
     nur_dob text,
     nur_sex text,
@@ -48,6 +51,7 @@ c.execute("""CREATE TABLE nurses (
 
 # Create Room table
 c.execute("""CREATE TABLE rooms (
+    r_id INTEGER PRIMARY KEY AUTOINCREMENT,
     r_name text
     
 )
@@ -55,8 +59,9 @@ c.execute("""CREATE TABLE rooms (
 
 # Create Bed table
 c.execute("""CREATE TABLE bed (
-    p_id integer,
-    r_id integer,
+    b_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    
+
     r_name text
 
 )
@@ -64,6 +69,7 @@ c.execute("""CREATE TABLE bed (
 
 # Create Bill table
 c.execute("""CREATE TABLE bills (
+    bill_id INTEGER PRIMARY KEY AUTOINCREMENT,
     bill_values integer,
     p_id integer
 
