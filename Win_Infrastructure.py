@@ -206,26 +206,85 @@ class Win_Infrastructure:
 
         # Remove all
         def remove_all1():
+            # Create a database or connect to one
+            conn = sqlite3.connect("hospital.db")
+
+            # Create cursor
+            c = conn.cursor()
+
             for record in my_tree1.get_children():
                 my_tree1.delete(record) 
 
+            c.execute("DELETE from rooms")
             # Remove data away from database here   
+
+            # Commit Changes
+            conn.commit()
+
+            # Close Connection
+            conn.close()  
+
+            # Clear The Treeview Table
+            my_tree1.delete(*my_tree1.get_children())
+
+            # Run to pull data from database on start
+            query_database1() 
+            
+            
         
         # Remove one selected
         def remove_one1():
             x = my_tree1.selection()[0]
             my_tree1.delete(x)
 
-            # Remove data away from database here   
+            # Create a database or connect to one
+            conn = sqlite3.connect("hospital.db")
 
+            # Create cursor
+            c = conn.cursor()
+
+            c.execute("DELETE from rooms WHERE r_id=" + room_id_box.get())
+            
+            # Clear boxes
+            id1_box.delete(0, END)
+            name1_box.delete(0, END)
+           
+            # Commit Changes
+            conn.commit()
+
+            # Close Connection
+            conn.close()  
+
+            # Clear The Treeview Table
+            my_tree1.delete(*my_tree1.get_children())
+
+            # Run to pull data from database on start
+            query_database1()
 
         # Remove many selected
         def remove_many1():
+            # Create a database or connect to one
+            conn = sqlite3.connect("hospital.db")
+
+            # Create cursor
+            c = conn.cursor()
+
             x = my_tree1.selection()
             for record in x:
                 my_tree1.delete(record)
+                c.execute("DELETE from rooms WHERE r_id=" + record[0])
+            
+            # Commit Changes
+            conn.commit()
 
-            # Remove data away from database here   
+            # Close Connection
+            conn.close()  
+
+            # Clear The Treeview Table
+            my_tree1.delete(*my_tree1.get_children())
+
+            # Run to pull data from database on start
+            query_database1()
 
         btn_frame1 = LabelFrame(win, text= "Room Command")
         btn_frame1.pack(fill ="x", expand="yes", padx=20)
@@ -476,7 +535,8 @@ class Win_Infrastructure:
 
             for record in my_tree2.get_children():
                 my_tree2.delete(record) 
-                c.execute("DELETE from beds WHERE bed_id=" + record[0])   
+
+            c.execute("DELETE from beds")   
 
             # Commit Changes
             conn.commit()

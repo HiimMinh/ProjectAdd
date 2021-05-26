@@ -214,6 +214,14 @@ class Win_Patients:
             # Pull data before running program
             query_database()
 
+            # Clear boxes
+            name_box.delete(0, END)
+            dob_box.delete(0, END)
+            sex_box.delete(0, END)
+            adr_box.delete(0, END)
+            ill_box.delete(0, END)
+            id1_box.delete(0, END)
+
         # Add Record to Database
         def add_record():
             # Create a database or connect to one
@@ -248,12 +256,7 @@ class Win_Patients:
             # Close Connection
             conn.close()
 
-            # Clear boxes
-            name_box.delete(0, END)
-            dob_box.delete(0, END)
-            sex_box.delete(0, END)
-            adr_box.delete(0, END)
-            ill_box.delete(0, END)
+            
 
             # Clear The Treeview Table
             my_tree.delete(*my_tree.get_children())
@@ -261,7 +264,12 @@ class Win_Patients:
             # Run to pull data from database on start
             query_database()
 
-
+            # Clear boxes
+            name_box.delete(0, END)
+            dob_box.delete(0, END)
+            sex_box.delete(0, END)
+            adr_box.delete(0, END)
+            ill_box.delete(0, END)
             
         # Show records upon running program
         def query_database():
@@ -301,7 +309,8 @@ class Win_Patients:
 
             for record in my_tree.get_children():
                 my_tree.delete(record) 
-                c.execute("DELETE from patients WHERE p_id=" + record[0])
+
+            c.execute("DELETE from patients")
 
             # Commit Changes
             conn.commit()
@@ -309,8 +318,8 @@ class Win_Patients:
             # Close Connection
             conn.close()  
 
-            # Clear The Treeview Table
-            my_tree.delete(*my_tree.get_children())
+            # # Clear The Treeview Table
+            # my_tree.delete(*my_tree.get_children())
 
             # Run to pull data from database on start
             query_database()
@@ -326,7 +335,7 @@ class Win_Patients:
             # Create cursor
             c = conn.cursor()
 
-            c.execute("DELETE from patients WHERE p_id=" + id1_box.get())
+            c.execute("DELETE from patients WHERE oid=" + id1_box.get())
 
             # Clear boxes
             id1_box.delete(0, END)

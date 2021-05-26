@@ -11,7 +11,7 @@ class Win_Bill:
     def open_bill(self, root):
         # Create patien window
         win = Toplevel(root)
-        win.title("Patients")
+        win.title("Bill")
 
         # Rezise patient window
         win.geometry("1600x900")
@@ -239,8 +239,9 @@ class Win_Bill:
             c = conn.cursor()
 
             for record in my_tree1.get_children():
-                my_tree1.delete(record) 
-                c.execute("DELETE from medicines WHERE med_id=" + record[0])
+                my_tree1.delete(record)
+
+            c.execute("DELETE from medicines")
 
             # Commit Changes
             conn.commit()
@@ -546,7 +547,8 @@ class Win_Bill:
 
             for record in my_tree2.get_children():
                 my_tree2.delete(record) 
-                c.execute("DELETE from bills WHERE bill_id=" + record[0])   
+                
+            c.execute("DELETE from bills")   
             
             # Commit Changes
             conn.commit()

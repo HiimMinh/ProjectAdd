@@ -278,7 +278,8 @@ class Win_Employees:
 
             for record in my_tree1.get_children():
                 my_tree1.delete(record) 
-                c.execute("DELETE from doctors WHERE doc_id=" + record[0])
+
+            c.execute("DELETE from doctors")
             # Remove data away from database here   
 
             # Commit Changes
@@ -631,8 +632,9 @@ class Win_Employees:
             c = conn.cursor()
 
             for record in my_tree2.get_children():
-                my_tree2.delete(record) 
-                c.execute("DELETE from nurses WHERE nur_id=" + record[0])
+                my_tree2.delete(record)
+
+            c.execute("DELETE from nurses")
                
             # Commit Changes
             conn.commit()
