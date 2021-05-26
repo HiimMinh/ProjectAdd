@@ -468,26 +468,83 @@ class Win_Infrastructure:
 
         # Remove all
         def remove_all2():
+            # Create a database or connect to one
+            conn = sqlite3.connect("hospital.db")
+
+            # Create cursor
+            c = conn.cursor()
+
             for record in my_tree2.get_children():
                 my_tree2.delete(record) 
+                c.execute("DELETE from beds WHERE bed_id=" + record[0])   
 
-            # Remove data away from database here   
-        
+            # Commit Changes
+            conn.commit()
+
+            # Close Connection
+            conn.close()  
+
+            # Clear The Treeview Table
+            my_tree2.delete(*my_tree2.get_children())
+
+            # Run to pull data from database on start
+            query_database2()
+
         # Remove one selected
         def remove_one2():
+            # Create a database or connect to one
+            conn = sqlite3.connect("hospital.db")
+
+            # Create cursor
+            c = conn.cursor()
+
             x = my_tree2.selection()[0]
             my_tree2.delete(x)
 
-            # Remove data away from database here   
+            c.execute("DELETE from nurses WHERE nur_id=" + bed_id_box.get())
 
+            # Clear boxes
+            bed_id_box.delete(0, END)
+            room_name_box.delete(0, END)
+            room_id_box.delete(0, END)
+            patient_id_box.delete(0, END)
+
+            # Commit Changes
+            conn.commit()
+
+            # Close Connection
+            conn.close()  
+
+            # Clear The Treeview Table
+            my_tree2.delete(*my_tree2.get_children())
+
+            # Run to pull data from database on start
+            query_database2()
 
         # Remove many selected
         def remove_many2():
+            # Create a database or connect to one
+            conn = sqlite3.connect("hospital.db")
+
+            # Create cursor
+            c = conn.cursor()
+
             x = my_tree2.selection()
             for record in x:
                 my_tree2.delete(record)
+                c.execute("DELETE from beds WHERE bed_id=" + record[0])
 
-            # Remove data away from database here   
+            # Commit Changes
+            conn.commit()
+
+            # Close Connection
+            conn.close()  
+
+            # Clear The Treeview Table
+            my_tree2.delete(*my_tree2.get_children())
+
+            # Run to pull data from database on start
+            query_database2()
         
         # Buttons frame
         btn_frame2 = LabelFrame(win, text= "Bed Command")

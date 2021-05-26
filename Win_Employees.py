@@ -268,30 +268,88 @@ class Win_Employees:
             # Close Connection
             conn.close()
 
-
-
         # Remove all
         def remove_all():
+            # Create a database or connect to one
+            conn = sqlite3.connect("hospital.db")
+
+            # Create cursor
+            c = conn.cursor()
+
             for record in my_tree1.get_children():
                 my_tree1.delete(record) 
-
+                c.execute("DELETE from doctors WHERE doc_id=" + record[0])
             # Remove data away from database here   
-        
+
+            # Commit Changes
+            conn.commit()
+
+            # Close Connection
+            conn.close()  
+
+            # Clear The Treeview Table
+            my_tree1.delete(*my_tree1.get_children())
+
+            # Run to pull data from database on start
+            query_database()
+
         # Remove one selected
         def remove_one():
             x = my_tree1.selection()[0]
             my_tree1.delete(x)
 
-            # Remove data away from database here   
+            # Create a database or connect to one
+            conn = sqlite3.connect("hospital.db")
 
+            # Create cursor
+            c = conn.cursor()
+
+            c.execute("DELETE from doctors WHERE doc_id=" + id1_box.get())
+            
+            # Clear boxes
+            id1_box.delete(0, END)
+            name_box.delete(0, END)
+            dob_box.delete(0, END)
+            sex_box.delete(0, END)
+            maj_box.delete(0, END)
+            sal_box.delete(0, END)
+
+            # Commit Changes
+            conn.commit()
+
+            # Close Connection
+            conn.close()  
+
+            # Clear The Treeview Table
+            my_tree1.delete(*my_tree1.get_children())
+
+            # Run to pull data from database on start
+            query_database()
 
         # Remove many selected
         def remove_many():
+            # Create a database or connect to one
+            conn = sqlite3.connect("hospital.db")
+
+            # Create cursor
+            c = conn.cursor()
+
             x = my_tree1.selection()
             for record in x:
                 my_tree1.delete(record)
+                c.execute("DELETE from doctors WHERE doc_id=" + record[0])
+            
+            # Commit Changes
+            conn.commit()
 
-            # Remove data away from database here   
+            # Close Connection
+            conn.close()  
+
+            # Clear The Treeview Table
+            my_tree1.delete(*my_tree1.get_children())
+
+            # Run to pull data from database on start
+            query_database()
 
         # Buttons frame
         btn_frame = LabelFrame(win, text= "Doctor Command")
@@ -351,7 +409,7 @@ class Win_Employees:
         tree2_scroll.config(command=my_tree2.yview)
 
         # Define our columns
-        my_tree2['columns'] = ("ID", "Name", "DoB", "Sex", "Salary", "Support doctor ID")
+        my_tree2['columns'] = ("ID", "Name", "DoB", "Sex", "Salary", "Doctor ID")
 
         # Formate our columns
         my_tree2.column("#0", width = 0, stretch = NO)
@@ -360,7 +418,7 @@ class Win_Employees:
         my_tree2.column("DoB", anchor = W, width = 200)
         my_tree2.column("Sex", anchor = W, width = 100)
         my_tree2.column("Salary", anchor = W, width = 200)
-        my_tree2.column("Support doctor ID", anchor = W, width = 50)
+        my_tree2.column("Doctor ID", anchor = W, width = 50)
 
         # Create Headings
         my_tree2.heading("#0", text = "", anchor = CENTER)
@@ -369,7 +427,7 @@ class Win_Employees:
         my_tree2.heading("DoB", text = "DoB", anchor=CENTER)
         my_tree2.heading("Sex", text = "Sex", anchor=CENTER)
         my_tree2.heading("Salary", text = "Salary", anchor=CENTER)
-        my_tree2.heading("Support doctor ID", text = "Support doctor ID", anchor=CENTER)
+        my_tree2.heading("Doctor ID", text = "Doctor ID", anchor=CENTER)
 
         #?????????????????????????
         
@@ -401,7 +459,7 @@ class Win_Employees:
         sal2 = Label(add_frame2, text = "Salary")
         sal2.grid(row=0, column = 3, padx= 10, pady= 5)
 
-        doctorsp_id_label = Label(add_frame2, text = "Support doctor ID")
+        doctorsp_id_label = Label(add_frame2, text = "Doctor ID")
         doctorsp_id_label.grid(row=0, column = 5, padx= 10, pady= 5)
 
         #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -480,11 +538,11 @@ class Win_Employees:
 
                     WHERE nur_id = :nur_id""",
                     {   
-                        'p_id' : id_box2.get(),
-                        'p_name': name_box2.get(),
-                        'p_dob' : dob_box2.get(),
-                        'p_sex' : sex_box2.get(),
-                        'p_salary' : sal_box2.get(),
+                        'nur_id' : id_box2.get(),
+                        'nur_name': name_box2.get(),
+                        'nur_dob' : dob_box2.get(),
+                        'nur_sex' : sex_box2.get(),
+                        'nur_salary' : sal_box2.get(),
                         'docsp_id' : doctorsp_id_box.get()
                     }
                     )
@@ -566,26 +624,85 @@ class Win_Employees:
 
         # Remove all
         def remove_all2():
+            # Create a database or connect to one
+            conn = sqlite3.connect("hospital.db")
+
+            # Create cursor
+            c = conn.cursor()
+
             for record in my_tree2.get_children():
                 my_tree2.delete(record) 
+                c.execute("DELETE from nurses WHERE nur_id=" + record[0])
+               
+            # Commit Changes
+            conn.commit()
 
-            # Remove data away from database here   
-        
+            # Close Connection
+            conn.close()  
+
+            # Clear The Treeview Table
+            my_tree2.delete(*my_tree2.get_children())
+
+            # Run to pull data from database on start
+            query_database2()
+
         # Remove one selected
         def remove_one2():
+            # Create a database or connect to one
+            conn = sqlite3.connect("hospital.db")
+
+            # Create cursor
+            c = conn.cursor()
+
             x = my_tree2.selection()[0]
             my_tree2.delete(x)
 
-            # Remove data away from database here   
+            c.execute("DELETE from nurses WHERE nur_id=" + id_box2.get())
 
+            # Clear boxes
+            id_box2.delete(0, END)
+            name_box2.delete(0, END)
+            dob_box2.delete(0, END)
+            sex_box2.delete(0, END)
+            sal_box2.delete(0, END)
+            doctorsp_id_box.delete(0, END)
+
+            # Commit Changes
+            conn.commit()
+
+            # Close Connection
+            conn.close()  
+
+            # Clear The Treeview Table
+            my_tree2.delete(*my_tree2.get_children())
+
+            # Run to pull data from database on start
+            query_database2()
 
         # Remove many selected
         def remove_many2():
+            # Create a database or connect to one
+            conn = sqlite3.connect("hospital.db")
+
+            # Create cursor
+            c = conn.cursor()
+
             x = my_tree2.selection()
             for record in x:
                 my_tree2.delete(record)
+                c.execute("DELETE from nurses WHERE nur_id=" + record[0])
 
-            # Remove data away from database here   
+            # Commit Changes
+            conn.commit()
+
+            # Close Connection
+            conn.close()  
+
+            # Clear The Treeview Table
+            my_tree2.delete(*my_tree2.get_children())
+
+            # Run to pull data from database on start
+            query_database2()
 
         # Buttons Frame
         btn_frame2 = LabelFrame(win, text= "Nurse Command" )

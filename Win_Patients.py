@@ -163,12 +163,12 @@ class Win_Patients:
             values = my_tree.item(selected, 'values')
 
             # Output to entry boxes
+            id1_box.insert(0, values[0])
             name_box.insert(0, values[1])
             dob_box.insert(0, values[2])
             sex_box.insert(0, values[3])
             adr_box.insert(0, values[4])
             ill_box.insert(0, values[5])
-            id1_box.insert(0, values[0])
 
         # Update Record 
         def update_record():
@@ -293,27 +293,85 @@ class Win_Patients:
 
         # Remove all
         def remove_all():
+            # Create a database or connect to one
+            conn = sqlite3.connect("hospital.db")
+
+            # Create cursor
+            c = conn.cursor()
+
             for record in my_tree.get_children():
                 my_tree.delete(record) 
+                c.execute("DELETE from patients WHERE p_id=" + record[0])
 
-            # Remove data away from database here   
+            # Commit Changes
+            conn.commit()
+
+            # Close Connection
+            conn.close()  
+
+            # Clear The Treeview Table
+            my_tree.delete(*my_tree.get_children())
+
+            # Run to pull data from database on start
+            query_database()
         
         # Remove one selected
         def remove_one():
             x = my_tree.selection()[0]
             my_tree.delete(x)
 
-            # Remove data away from database here   
+            # Create a database or connect to one
+            conn = sqlite3.connect("hospital.db")
 
+            # Create cursor
+            c = conn.cursor()
+
+            c.execute("DELETE from patients WHERE p_id=" + id1_box.get())
+
+            # Clear boxes
+            id1_box.delete(0, END)
+            name_box.delete(0, END)
+            dob_box.delete(0, END)
+            sex_box.delete(0, END)
+            adr_box.delete(0, END)
+            ill_box.delete(0, END)
+
+            # Commit Changes
+            conn.commit()
+
+            # Close Connection
+            conn.close()  
+
+            # Clear The Treeview Table
+            my_tree.delete(*my_tree.get_children())
+
+            # Run to pull data from database on start
+            query_database()
 
         # Remove many selected
         def remove_many():
+            # Create a database or connect to one
+            conn = sqlite3.connect("hospital.db")
+
+            # Create cursor
+            c = conn.cursor()
+
             x = my_tree.selection()
             for record in x:
                 my_tree.delete(record)
+                c.execute("DELETE from patients WHERE p_id=" + record[0])
+            
+            # Commit Changes
+            conn.commit()
 
-            # Remove data away from database here   
+            # Close Connection
+            conn.close()  
 
+            # Clear The Treeview Table
+            my_tree.delete(*my_tree.get_children())
+
+            # Run to pull data from database on start
+            query_database()
 
 
         # Buttons Frame
