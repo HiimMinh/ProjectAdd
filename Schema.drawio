@@ -1,6 +1,6 @@
 <mxfile>
     <diagram id="0acwrnxG0xmarjm6i2I8" name="Page-1">
-        <mxGraphModel dx="1542" dy="630" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+        <mxGraphModel dx="1060" dy="614" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -154,14 +154,17 @@
                 <mxCell id="96" value="&lt;u&gt;r_name&lt;/u&gt;" style="whiteSpace=wrap;html=1;align=center;fillColor=#FF00FF;" parent="1" vertex="1">
                     <mxGeometry x="360" y="800" width="100" height="40" as="geometry"/>
                 </mxCell>
-                <mxCell id="97" value="p_age" style="whiteSpace=wrap;html=1;align=center;fillColor=#A3D977;" vertex="1" parent="1">
+                <mxCell id="97" value="p_age" style="whiteSpace=wrap;html=1;align=center;fillColor=#A3D977;" parent="1" vertex="1">
                     <mxGeometry x="760" y="80" width="100" height="40" as="geometry"/>
                 </mxCell>
-                <mxCell id="98" value="doc_age" style="whiteSpace=wrap;html=1;align=center;fillColor=#A3D977;" vertex="1" parent="1">
+                <mxCell id="98" value="doc_age" style="whiteSpace=wrap;html=1;align=center;fillColor=#A3D977;" parent="1" vertex="1">
                     <mxGeometry x="760" y="160" width="100" height="40" as="geometry"/>
                 </mxCell>
-                <mxCell id="99" value="nur_age" style="whiteSpace=wrap;html=1;align=center;fillColor=#A3D977;" vertex="1" parent="1">
+                <mxCell id="99" value="nur_age" style="whiteSpace=wrap;html=1;align=center;fillColor=#A3D977;" parent="1" vertex="1">
                     <mxGeometry x="760" y="240" width="100" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="100" value="total_price" style="whiteSpace=wrap;html=1;align=center;fillColor=#A3D977;" vertex="1" parent="1">
+                    <mxGeometry x="460" y="480" width="100" height="40" as="geometry"/>
                 </mxCell>
             </root>
         </mxGraphModel>
