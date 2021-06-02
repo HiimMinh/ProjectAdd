@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <style>
+        h2{font-size: 20px;}
+        h3{font-size: 30px;line-height: 10px;}
+        h4{font-size: 30px;line-height: 10px;}
+        h5{font-size: 20px;line-height: 10px;}
+        p{font-size: 20px;line-height: 30px;}
+        pre{font-size: 20px;line-height: 30px;}
+        img{
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+
+        }
+    </style>
+        <title> 
+            Hospital Management Report
+        </title>
+    </head>
+    <body style = "background-color: #ffffe6;">
+        <h1 style="text-align:center">
+            HOSPITAL MANAGEMENT SYSTEM REPORT
+        </h1>
+
+
+        <h2>
+            you can get the demo of the program:<a href="https://github.com/hoccode-afk/ProjectAdd">here</a>
+        </h2>
+
+
+        <h3 style = "text-decoration: underline;">
+            I. Build-up the ideas for the Project
+        </h3>
+
+        <p style = "font-family: Georgia;">
+            First we have sketch out the ideas of this system: who we gonna make this system for? What this system "will" have? How it's gonna work? It took us times to finally come
+            out with the ideas and we SQL to solve the ideas that we had been thinking in our head:
+        </p>
+
+        <img src = "database1.png" alt = "database" style = "width:35%">
+        <p style="text-align:center; font-family: Georgia; color:blue;">
+            Pic1: All the components that contains in this system
+        </p>
+
+        <p style = "font-family: Georgia">
+            As you can see in Pic1, there are a lots of things happened around there, so there are some explains for you to understand all of it:
+        </p>
+
+        <p style = "font-family: Georgia">
+            Try to think for a sec, what make a hospital runs smoothly? Doctor and Nurse. For easy to mananage, Each Doctor and Nurse must have there own ID to identical themself.
+            with Doctor and Nurse, we created their ID with <span style = "color: orangered">PRIMARY KEY</span> in SQL. Come after that is their name, date of birth, age, salaries and especially with doctors, they will have their major. There are a few things to keep in mind that
+            Nurse's ID is related to Doctor's ID. Because Doctor can't handle all the works by themself. So, Nurse is the one who support them. Each Nurses must have their Doctor's ID as  <span style = "color:purple">FOREIGN KEY</span>
+            to see who they gonna working with.
+            <img src = "DocAndNurse.png" alt = "Doctor and Nurse" style = "width:40%">
+        </p>
+
+        <p style = "font-family: Georgia">
+            After setting up all the employees, we have to create hospital with all facilities for the hospital to run smoothly. Each hospital must have specific room such as rooms for Doctors to examine for the patients or rooms for patients to be taken cared of by the doctor and the Nurse.
+            With each room in hospital, we created room name and room ID in <span style = "color: orangered">PRIMARY KEY</span>. In each room we will have number of beds with specific ID in <span style = "color: orangered">PRIMARY KEY</span>, patient id, room id and room name in <span style = "color:purple">FOREIGN KEY</span>.
+            With these <span style = "color:purple">FOREIGN KEY</span>, the admit can easily manage, simply like searching each bed in each room, how many rooms left or who is take care of this person in this bed, etc.....
+            <img src = "RoomAndBed.png" alt = "Doctor and Nurse" style = "width:35%">
+        </p>
+
+        <p style = "font-family:Georgia">
+            Now the hospital is on, but the hospital couldn't maintain long if there is no customer. just like Doctor and Nurse, Patient still have their exclusive ID in <span style = "color: orangered">PRIMARY KEY</span> with full information like name, age, Date Of Birth, Sex, address and 
+            the problems they are having,...
+            <img src = "Patient.png" alt = "Patient" style = "width:40%">
+        </p>
+        
+        <p style = "font-family: Georgia">
+            When all Doctors and Nurses are all ready to serve, we added Service times for the doctor and the nurses. Because sometimes doctors or nurses have to go around
+            each bed asking patients about their health condition before and after treatment. So, we set the doctor's ID, nurse's Id and patient's ID as <span style = "color:purple">FOREIGN KEY</span> .They will look up at their service times to check what time in the day or what day
+            in the week they have to check their patient's health conditions. 
+        </p>
+
+        <p style = "font-family:Georgia">
+            We also added Nurse work times with their ID, Room ID and Room name are also included. The reason we did that because we want to treat our patients like a king when they come to us, so with each room contain more than one patient, 
+            we will arrange a nurse to take care of them.
+            <img src = "ServiceTime.png" alt = "Service Time" style = "width:35%">
+        </p>
+        
+        <p style = "font-family: Georgia">
+            Finally, we created medicine and Bill. Medicine is to provide medicine with afordable prices for the patients who in need and don't want to go far to buy. Because the number of medicine may quite large so we gonna need
+            its name as <span style = "color: orangered">PRIMARY KEY</span> with quantity and how much it gonna be sold. Comes to the most important is payment, or you can called it "health treatment fee". We gonna need Patient ID as <span style = "color:purple">FOREIGN KEY</span>
+            to identified them with specific Bill ID <span style = "color: orangered">PRIMARY KEY</span> and how much they need to be paid.
+            <img src = "BillAndMedicine.png" alt = "Bill and Medicine" style = "width:35%">
+        </p>
+        
+        <p style = "font-family: Georgia">
+            After having all the ideas comes up, we have this diagram for the future use:
+        </p>
+
+        <p style="text-align:center; font-family: Georgia; color:blue;">
+            <img src = "database diagram.png"alt = "database diagram" style = "width:35%">
+            Pic2: SQL diagram that we created from all the components
+        </p>
+
+
+
+        <h4 style = "text-decoration: underline;">
+            II. Time To Code!
+        </h4>
+
+        <pre style = "font-family:Georgia">In this session, we decided to use <a href="https://docs.python.org/3/library/tkinter.html">Tkinter GUI</a>. With tkinter, user will find it very easy to interact and working with.</pre>
+        <p style = "font-family: Georgia">
+            First, we created window that contain 4 classes: Employees, Patients, Infrastructure and Bill. We put each class into a button. When the User click into that button, a new sub window will imediately pops-up and allow users to
+            manage in the way they want.
+        </p>
+        <p style="text-align:center; font-family: Georgia; color:blue;">
+            <img src = "MainWindow.png"alt = "Main Window" style = "width:35%">
+            System's main screen
+        </p>
+        
+        <h5 style = "text-decoration: underline;">
+            1.Patients-Employees
+        </h5>
+
+        <p style = "font-family:Georgia">
+            Because patients and Employees are technically almost the same so we gonna report both of it at the same time. After press the button, a window of patient or employees immediately 
+            pops-up with input functions such as name, age,.... To save or delete the information of each person and don't have to re-type it each time we open up the app, SQL is the suitable thing
+            for this job. with each information of a person you type, it will pops-up in the small table on top of it and save the data to SQL server. You can easily delete it by click into that information
+            and press remove, depends on your decision.      
+        </p>
+        <p style="text-align:center; font-family: Georgia; color:blue;">
+            <img src = "EmployeeWindow.png" alt = "Employees Window" style = "width:35%">
+            Employee Window
+        </p>
+        <p style="text-align:center; font-family: Georgia; color:blue;">
+            <img src = "PatientWindow.png" alt = "Patients window" style = "width:35%">
+            Patient window
+        
+
+        <h5 style = "text-decoration: underline;">
+            2.Infrastructure
+        </h5>
+
+        <p style = "font-family: Georgia">
+            In this part, we apply the same technique like patients and employees interface, use the same SQL technique to save information. Users can input what ever information they want and delete it
+            whenever they want like how many bed in a room. Doctor and Nurse could be arranged by the user to each room, so is the patient.
+        </p>
+        <p style="text-align:center; font-family: Georgia; color:blue;">
+            <img src = "InfrastructureWindow.png" alt = "Infrastructure Window" style = "width:35%">
+            Infrastructure Window
+            
+        <h5 style = "text-decoration: underline;">
+            3.Bill
+        </h5>   
+        
+        <p style = "font-family: Georgia">
+            Finally, is to manage the number of medicine with the following price and selling medicine for the the patients. still the same technique as  Employee, patient and infrastructure, you can add any
+            information of the medicine that your hospital are selling and give that to the patients who in need
+        </p>
+        <p style="text-align:center; font-family: Georgia; color:blue;">
+            <img src = "BillWindow.png" alt = "Bill Window" style = "width:35%">
+            Bill Window
+
+    </body>
+</html>
